@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>京东物流 省心高效 | 技术驱动</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jdl: {
+              red: "#E1251B",
+              hover: "#C8161D",
+              dark: "#1A1A1A",
+              card: "#2B2B2B",
+              muted: "#8C8C8C",
+              line: "#EEEEEE",
+              bg: "#F7F8FA",
+            },
+          },
+          boxShadow: {
+            panel: "0 12px 40px rgba(0,0,0,.08)",
+            nav: "0 4px 16px rgba(0,0,0,.06)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 80px; }
+    body { font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif; }
+    .logo-mark { font-weight: 900; letter-spacing: -0.05em; }
+    .title-rule::before,
+    .title-rule::after {
+      content: "";
+      display: inline-block;
+      width: 22px;
+      height: 2px;
+      background: #E1251B;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+    .mega {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+    }
+    .has-mega:hover .mega,
+    .has-mega:focus-within .mega {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .group:hover .mega,
+    .group:focus-within .mega {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .mega.open {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .slide { opacity: 0; pointer-events: none; }
+    .slide.active { opacity: 1; pointer-events: auto; }
+    .dot.active { width: 22px; background: #E1251B; }
+    .svc-tab { color: #666; }
+    .svc-tab.active { color: #E1251B; }
+    .svc-tab.active svg { transform: scale(1.08); }
+    .svc-tab svg { transition: transform .2s, opacity .2s; }
+    .svc-tab:not(.active) svg { opacity: .55; }
+    .svc-side-tab.active { color: #E1251B; font-weight: 600; }
+    .ind-tab { background: rgba(255,255,255,.9); color: #333; transition: all .2s; }
+    .ind-tab svg { display: none; }
+    .ind-tab .ind-more { display: none; }
+    .ind-tab.active { background: #E1251B; color: #fff; }
+    .ind-tab.active svg { display: block; }
+    .ind-tab.active .ind-more { display: block; font-size: 11px; opacity: .9; }
+    .news-card { transition: transform .3s; }
+    .news-card:hover { transform: translateY(-4px) scale(1.03); }
+    .news-card:hover .news-cover { transform: scale(1.05); }
+    .news-more { opacity: 0; transform: translateY(8px); transition: all .3s; }
+    .quick-link svg { transition: transform .6s ease; }
+    .quick-link:hover svg { transform: rotate(360deg); }
+    .news-card:hover .news-more { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-white text-jdl-dark">
+  <!-- Top bar -->
+  <div class="hidden lg:block bg-jdl-dark text-white/80 text-xs">
+    <div class="max-w-[1280px] mx-auto h-8 px-6 flex items-center justify-end gap-6 text-xs">
+      <div id="groupSite" class="relative cursor-pointer">
+        <span id="groupSiteTrigger" class="flex items-center gap-1 hover:text-white cursor-pointer">集团网站 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 9l6 6 6-6"/></svg></span>
+        <div id="groupSiteMenu" class="mega fixed left-0 right-0 top-8 bg-white text-jdl-dark shadow-panel z-[60]">
+          <div class="grid grid-cols-5 gap-6 px-10 py-6">
+            <a href="#" class="block hover:text-jdl-red">
+              <p class="font-medium text-sm">京东物流国际 ›</p>
+              <p class="text-xs text-jdl-muted mt-1">国际物流解决方案、产品及服务</p>
+            </a>
+            <a href="#" class="block hover:text-jdl-red">
+              <p class="font-medium text-sm">京东物流港澳 ›</p>
+              <p class="text-xs text-jdl-muted mt-1">面向港澳地区用户提供专属服务</p>
+            </a>
+            <a href="#" class="block hover:text-jdl-red">
+              <p class="font-medium text-sm">京东物控 ›</p>
+              <p class="text-xs text-jdl-muted mt-1">自动化、数字智能技术解决方案</p>
+            </a>
+            <a href="#" class="block hover:text-jdl-red">
+              <p class="font-medium text-sm">与图 ›</p>
+              <p class="text-xs text-jdl-muted mt-1">数智地图服务平台</p>
+            </a>
+            <a href="#" class="block hover:text-jdl-red">
+              <p class="font-medium text-sm">商品信任链 ›</p>
+              <p class="text-xs text-jdl-muted mt-1">供应链金融服务及解决方案</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="relative group cursor-pointer">
+        <span class="flex items-center gap-1 hover:text-white">简体中文 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 9l6 6 6-6"/></svg></span>
+        <div class="mega absolute right-0 top-full mt-1 w-44 bg-white text-jdl-dark shadow-panel rounded-lg py-2 z-[60] border border-jdl-line">
+          <a href="#" class="flex items-center justify-between px-5 py-2.5 text-sm hover:text-jdl-red hover:bg-gray-50">简体中文 <span class="text-jdl-red text-xs">✓</span></a>
+          <a href="#" class="flex items-center px-5 py-2.5 text-sm hover:text-jdl-red hover:bg-gray-50">繁體中文</a>
+          <a href="#" class="flex items-center px-5 py-2.5 text-sm hover:text-jdl-red hover:bg-gray-50">English</a>
+        </div>
+      </div>
+      <a href="#login" class="hover:text-white">登录</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="header" class="sticky top-0 z-50 bg-white border-b border-jdl-line">
+    <div class="max-w-[1280px] mx-auto h-[72px] px-4 sm:px-6 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2 shrink-0">
+        <span class="logo-mark text-[34px] leading-none text-jdl-red">JDL</span>
+        <span class="text-jdl-red text-[17px] font-semibold tracking-wider ml-0.5 self-center">京东物流</span>
+      </a>
+
+      <nav class="hidden lg:flex relative flex-1 items-stretch justify-evenly h-[72px] text-[15px] text-[#333] ml-8">
+        <a href="#home" class="px-4 flex items-center relative text-jdl-red after:absolute after:left-4 after:right-4 after:bottom-0 after:h-[3px] after:bg-jdl-red">首页</a>
+
+        <!-- 服务与产品（企业/个人 双 Tab） -->
+        <div class="has-mega">
+          <a href="#logistics" class="px-4 h-[72px] flex items-center hover:text-jdl-red">服务与产品</a>
+          <div class="mega fixed left-0 right-0 top-[72px] bg-white shadow-nav border border-jdl-line transition duration-200 z-50 flex">
+            <div class="w-32 bg-jdl-bg py-6 px-4 shrink-0 border-r border-jdl-line">
+              <button data-svc-side="ent" class="svc-side-tab active block w-full text-left py-2 text-sm hover:text-jdl-red">企业服务</button>
+              <button data-svc-side="per" class="svc-side-tab block w-full text-left py-2 text-sm hover:text-jdl-red">个人服务</button>
+            </div>
+            <div class="flex-1 p-6">
+              <!-- 企业服务（截图6） -->
+              <div class="svc-pane grid grid-cols-5 gap-5" data-pane="ent">
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke-width="2"/><circle cx="12" cy="12" r="2.5" stroke-width="2"/></svg>
+                    物流服务
+                  </p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>快递服务</li><li>快运服务</li><li>仓配一体</li><li>大件服务</li>
+                    <li>送仓服务</li><li>冷链服务</li><li>医药服务</li><li>国际服务</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1" stroke-width="2"/><path stroke-width="2" d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+                    物流科技
+                  </p>
+                  <p class="text-[13px] font-medium text-[#333] mt-1">物流机器人</p>
+                  <ul class="space-y-1.5 text-[13px] text-[#555] mt-1.5">
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>智狼（标准版/扩展版/穿梭版）</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>天狼（四向版）</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>京东物流地狼</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>自动分拣墙</li>
+                  </ul>
+                  <p class="text-[13px] font-medium text-[#333] mt-3">数智供应链</p>
+                  <ul class="space-y-1.5 text-[13px] text-[#555] mt-1.5">
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>智能园区管理系统</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>供应链履约系统</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>视觉分析系统（视能方）</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>3D SCADA 系统</li>
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>爱咚移动数据终端</li>
+                  </ul>
+                  <p class="text-[13px] font-medium text-[#333] mt-3">低碳供应链</p>
+                  <ul class="space-y-1.5 text-[13px] text-[#555] mt-1.5">
+                    <li class="pl-3 relative"><span class="absolute left-0 text-[#999]">·</span>京碳惠 SCEMP</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/></svg>
+                    物流运力
+                  </p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>专线仓仓</li>
+                    <li>全货机包机</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v6h6M20 20v-6h-6M20 9a8 8 0 0 0-14-4M4 15a8 8 0 0 0 14 4"/></svg>
+                    增值服务
+                  </p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>快递</li><li>快运</li><li>仓配一体</li>
+                    <li>大件</li><li>送仓</li><li>冷链</li><li>医药</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-[#999]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke-width="2"/><path stroke-width="2" d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+                    京东服务
+                  </p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>安装服务</li>
+                    <li>维修服务</li>
+                    <li>机器人服务</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- 个人服务（截图5） -->
+              <div class="svc-pane grid grid-cols-4 gap-5 hidden" data-pane="per">
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3">寄快递</p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>京东特快</li><li>京东标快</li><li>生鲜特快</li><li>生鲜标快</li>
+                    <li>送同城</li><li>增值服务</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3">发重货</p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>重货标快</li><li>整车直达</li><li>增值服务</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3">寄国际</p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>国际快递</li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="font-semibold text-[15px] text-[#222] mb-3">找服务</p>
+                  <ul class="space-y-2 text-[13px] text-[#555]">
+                    <li>安装服务</li><li>维修服务</li><li>清洗服务</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 解决方案（截图4） -->
+        <div class="has-mega">
+          <a href="#supply" class="px-4 h-[72px] flex items-center hover:text-jdl-red">解决方案</a>
+          <div class="mega fixed left-0 right-0 top-[72px] bg-white shadow-nav border border-jdl-line p-8 grid grid-cols-4 gap-8 transition duration-200 z-50">
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">行业解决方案</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>消费品</li><li>3C</li><li>大家居</li><li>服饰</li><li>家电</li><li>汽车</li><li>生鲜</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">物流科技</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>智能仓储</li><li>教育产业学院</li><li>智能物流园</li>
+                <li>数智化供应链</li><li>与图数智地图服务平台</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">成功案例</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>消费品行业</li><li>工业品行业</li><li>汽车行业</li>
+                <li>大时尚行业</li><li>家电家居行业</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">最新案例</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>一周送出一亿只粽子，百年老字号的供应链物流革新</li>
+                <li>冰爽618，京东物流携手八喜实现冷链从成本中心到增长引擎</li>
+                <li>从1件校园白T到年销25亿，打赢服装"质价比"之战</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 服务支持（截图3） -->
+        <div class="has-mega">
+          <a href="#home" class="px-4 h-[72px] flex items-center hover:text-jdl-red">服务支持</a>
+          <div class="mega fixed left-0 right-0 top-[72px] bg-white shadow-nav border border-jdl-line p-8 grid grid-cols-4 gap-8 transition duration-200 z-50">
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">寄件服务</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>个人寄件</li><li>批量下单（寄快递）</li>
+                <li>批量下单（发重货）</li><li>批量下单（寄生鲜）</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">查询服务</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>运单查询</li><li>运费时效查询</li><li>网点查询</li>
+                <li>服务范围查询</li><li>通关服务</li>
+                <li>送货入仓地址查询</li><li>打木架城市查询</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">商家服务</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>电子合同签约</li><li>商家工作台</li><li>开放平台</li>
+                <li>开通月结</li><li>物流合作</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold mb-3 text-base text-[#222]">更多</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>服务细则</li><li>京东服务（维修 安装）</li><li>商家优惠通道</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 可持续发展（截图2） -->
+        <div class="has-mega">
+          <a href="#news" class="px-4 h-[72px] flex items-center hover:text-jdl-red">可持续发展</a>
+          <div class="mega fixed left-0 right-0 top-[72px] bg-white shadow-nav border border-jdl-line p-8 grid grid-cols-3 gap-8 transition duration-200 z-50">
+            <div>
+              <p class="font-semibold mb-3 text-base text-jdl-red">ESG</p>
+              <ul class="space-y-2 text-[14px] text-[#555] leading-6">
+                <li>我们的承诺</li>
+                <li>我们的行动 - 环境</li>
+                <li>我们的行动 - 社会</li>
+                <li>我们的行动 - 治理</li>
+              </ul>
+            </div>
+            <div class="space-y-4">
+              <div><p class="font-semibold mb-2 text-base text-[#222]">青流计划</p></div>
+              <div><p class="font-semibold mb-2 text-base text-[#222]">环保资讯</p></div>
+              <div><p class="font-semibold mb-2 text-base text-[#222]">合作咨询</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 关于京东物流（截图1） -->
+        <div class="has-mega">
+          <a href="#about" class="px-4 h-[72px] flex items-center hover:text-jdl-red">关于京东物流</a>
+          <div class="mega fixed left-0 right-0 top-[72px] bg-white shadow-nav border border-jdl-line px-10 py-7 grid grid-cols-6 gap-4 text-base transition duration-200 z-50">
+            <a href="#about" class="hover:text-jdl-red font-medium">企业介绍</a>
+            <a href="#news" class="hover:text-jdl-red font-medium">新闻中心</a>
+            <a href="#" class="hover:text-jdl-red font-medium">视频中心</a>
+            <a href="#" class="hover:text-jdl-red font-medium">投资者关系</a>
+            <a href="#about" class="hover:text-jdl-red font-medium">联系我们</a>
+            <a href="#" class="hover:text-jdl-red font-medium">招贤纳士</a>
+          </div>
+        </div>
+      </nav>
+
+      <button id="menuBtn" class="lg:hidden w-10 h-10 flex items-center justify-center" aria-label="打开菜单">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-jdl-line bg-white">
+      <a href="#home" class="block px-6 py-3 text-jdl-red">首页</a>
+      <a href="#logistics" class="block px-6 py-3">服务与产品</a>
+      <a href="#supply" class="block px-6 py-3">解决方案</a>
+      <a href="#home" class="block px-6 py-3">服务支持</a>
+      <a href="#news" class="block px-6 py-3">可持续发展</a>
+      <a href="#about" class="block px-6 py-3">关于京东物流</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="relative h-[640px] sm:h-[560px] md:h-[620px] overflow-hidden bg-[#dfe7ef]">
+    <div id="slides" class="absolute inset-0">
+      <div class="slide active absolute inset-0 transition-opacity duration-700">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#e8eef4] via-[#d9e4ee] to-[#c9d6e4]"></div>
+        <div class="absolute right-[8%] top-[18%] w-[280px] h-[280px] md:w-[380px] md:h-[380px] opacity-80">
+          <div class="w-full h-full rotate-12 grid grid-cols-3 gap-3">
+            <span class="bg-jdl-red/80 rounded-md"></span><span class="bg-jdl-red/40 rounded-md"></span><span class="bg-white/60 rounded-md"></span>
+            <span class="bg-jdl-red/50 rounded-md"></span><span class="bg-jdl-red rounded-md"></span><span class="bg-jdl-red/30 rounded-md"></span>
+            <span class="bg-white/40 rounded-md"></span><span class="bg-jdl-red/70 rounded-md"></span><span class="bg-jdl-red/20 rounded-md"></span>
+          </div>
+        </div>
+        <div class="relative max-w-[1280px] mx-auto px-6 pt-16 md:pt-24">
+          <h1 class="text-3xl md:text-5xl font-bold leading-tight max-w-2xl">助力企业降本增效<br />一体化供应链解决方案专家</h1>
+          <p class="mt-4 text-jdl-muted text-sm md:text-base">技术驱动，引领全球高效流通和可持续发展</p>
+        </div>
+      </div>
+      <div class="slide absolute inset-0 transition-opacity duration-700">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#1c1c1c] to-[#4a1515]"></div>
+        <div class="relative max-w-[1280px] mx-auto px-6 pt-16 md:pt-24 text-white">
+          <h1 class="text-3xl md:text-5xl font-bold leading-tight max-w-2xl">科技物流驱动履约<br />智能仓储 · 无人配送 · 数字孪生</h1>
+          <p class="mt-4 text-white/70">覆盖仓、运、配全链路的软硬件一体化能力</p>
+        </div>
+      </div>
+      <div class="slide absolute inset-0 transition-opacity duration-700">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#f4f1ec] to-[#e7d5c8]"></div>
+        <div class="relative max-w-[1280px] mx-auto px-6 pt-16 md:pt-24">
+          <h1 class="text-3xl md:text-5xl font-bold leading-tight max-w-2xl">全球物流网络<br />仓配一体覆盖几乎全部人口</h1>
+          <p class="mt-4 text-jdl-muted">仓储、运输、末端、大件、冷链与跨境六大网络协同</p>
+        </div>
+      </div>
+    </div>
+
+    <button id="prevSlide" class="hidden md:flex absolute left-3 md:left-6 top-1/3 z-10 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow items-center justify-center">‹</button>
+    <button id="nextSlide" class="hidden md:flex absolute right-3 md:right-6 top-1/3 z-10 w-10 h-10 rounded-full bg-white/80 hover:bg-white shadow items-center justify-center">›</button>
+    <div id="dots" class="absolute left-1/2 -translate-x-1/2 bottom-36 md:bottom-40 flex gap-2 z-10"></div>
+
+    <!-- Search + shortcuts -->
+    <div class="absolute left-0 right-0 bottom-6 md:bottom-10 z-20">
+      <div class="max-w-[1100px] mx-auto px-4 flex flex-col md:flex-row gap-4 items-stretch">
+        <form id="trackForm" class="bg-white/90 backdrop-blur rounded-2xl shadow-panel p-2 pl-4 flex items-center gap-2 flex-1 max-w-xl">
+          <svg class="w-5 h-5 text-jdl-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="2"/><path stroke-width="2" d="M20 20l-3-3"/></svg>
+          <input id="waybill" class="flex-1 bg-transparent outline-none text-sm py-3" placeholder="请输入运单号或包裹号" />
+          <button class="bg-jdl-red hover:bg-jdl-hover text-white rounded-full px-6 py-2.5 text-sm shrink-0">查快递</button>
+        </form>
+        <div class="bg-white rounded-2xl shadow-panel flex-1 grid grid-cols-4 py-3 px-2">
+          <a href="#logistics" class="quick-link text-center text-xs md:text-sm hover:text-jdl-red">
+            <div class="relative mx-auto mb-1.5 w-12 h-12 flex items-center justify-center">
+              <div class="absolute bottom-0 left-1/2 -translate-x-1/2">
+              <div class="w-6 h-6 bg-gray-900 rotate-45 rounded-[2px]"></div>
+              <div class="w-3.5 h-3.5 bg-gray-700 rotate-45 rounded-[2px] absolute top-1 left-1"></div>
+            </div>
+              <svg class="relative w-10 h-10 mb-2.5" viewBox="0 0 48 48" fill="none">
+              <path d="M24 7 L41 15.5 L24 24 L7 15.5 Z" fill="#E1251B"/>
+              <path d="M7 15.5 L24 24 L24 41 L7 32.5 Z" fill="#ffffff" stroke="#e8e8e8"/>
+              <path d="M41 15.5 L24 24 L24 41 L41 32.5 Z" fill="#f2f2f2" stroke="#e8e8e8"/>
+              <rect x="11" y="24" width="4.5" height="3.5" rx="0.5" fill="#E1251B"/>
+              <rect x="11" y="29.5" width="4.5" height="3.5" rx="0.5" fill="#E1251B"/>
+            </svg>
+            </div>
+            我要寄件
+          </a>
+          <a href="#logistics" class="quick-link text-center text-xs md:text-sm hover:text-jdl-red">
+            <div class="relative mx-auto mb-1.5 w-12 h-12 flex items-center justify-center">
+              <div class="absolute bottom-0 left-1/2 -translate-x-1/2">
+              <div class="w-6 h-6 bg-gray-900 rotate-45 rounded-[2px]"></div>
+              <div class="w-3.5 h-3.5 bg-gray-700 rotate-45 rounded-[2px] absolute top-1 left-1"></div>
+            </div>
+              <svg class="relative w-10 h-10 mb-2.5" viewBox="0 0 48 48" fill="none">
+              <rect x="25" y="7" width="15" height="20" rx="1.5" fill="#ffffff" stroke="#dcdcdc"/>
+              <path d="M28 11h9M28 15h9M28 19h6" stroke="#c5c5c5" stroke-width="1.3"/>
+              <rect x="21" y="13" width="15" height="20" rx="1.5" fill="#ffffff" stroke="#dcdcdc"/>
+              <path d="M24 17h9M24 21h9" stroke="#c5c5c5" stroke-width="1.3"/>
+              <circle cx="18" cy="22" r="9.5" fill="#ffffff" stroke="#E1251B" stroke-width="4.5"/>
+              <line x1="25" y1="29" x2="33" y2="37" stroke="#E1251B" stroke-width="4.5" stroke-linecap="round"/>
+            </svg>
+            </div>
+            运费&amp;时效查询
+          </a>
+          <a href="#logistics" class="quick-link text-center text-xs md:text-sm hover:text-jdl-red">
+            <div class="relative mx-auto mb-1.5 w-12 h-12 flex items-center justify-center">
+              <div class="absolute bottom-0 left-1/2 -translate-x-1/2">
+              <div class="w-6 h-6 bg-gray-900 rotate-45 rounded-[2px]"></div>
+              <div class="w-3.5 h-3.5 bg-gray-700 rotate-45 rounded-[2px] absolute top-1 left-1"></div>
+            </div>
+              <svg class="relative w-10 h-10 mb-2.5" viewBox="0 0 48 48" fill="none">
+              <path d="M9 18c-2 7 2 13 9 15" stroke="#E1251B" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <path d="M39 26c2-7-2-13-9-15" stroke="#E1251B" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="24" cy="22" r="12.5" fill="#ffffff" stroke="#E1251B" stroke-width="1.5"/>
+              <path d="M15 17c3-2 7-1 8 2s-2 5-5 4-5-4-3-6z" fill="#E1251B"/>
+              <path d="M25 25c3-1 6 1 5 4s-5 3-7 1 0-4 2-5z" fill="#E1251B"/>
+              <path d="M20 13c2 1 3 3 2 5" stroke="#E1251B" stroke-width="1.2" fill="none"/>
+            </svg>
+            </div>
+            服务范围
+          </a>
+          <a href="#logistics" class="quick-link text-center text-xs md:text-sm hover:text-jdl-red">
+            <div class="relative mx-auto mb-1.5 w-12 h-12 flex items-center justify-center">
+              <div class="absolute bottom-0 left-1/2 -translate-x-1/2">
+              <div class="w-6 h-6 bg-gray-900 rotate-45 rounded-[2px]"></div>
+              <div class="w-3.5 h-3.5 bg-gray-700 rotate-45 rounded-[2px] absolute top-1 left-1"></div>
+            </div>
+              <svg class="relative w-10 h-10 mb-2.5" viewBox="0 0 48 48" fill="none">
+              <path d="M6 19 L24 9 L42 19 Z" fill="#E1251B"/>
+              <rect x="10" y="19" width="28" height="20" fill="#ffffff" stroke="#e8e8e8"/>
+              <rect x="19" y="26" width="10" height="13" rx="1" fill="#E1251B"/>
+              <path d="M10 22h28" stroke="#E1251B" stroke-width="2.2"/>
+              <path d="M15 22v4M21 22v4M27 22v4M33 22v4" stroke="#E1251B" stroke-width="1.6"/>
+            </svg>
+            </div>
+            网点查询
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 综合物流 -->
+  <section id="logistics" class="py-16 md:py-20 bg-jdl-bg">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
+      <h2 class="text-center text-2xl md:text-[32px] font-semibold title-rule">面向丰富场景的物流服务</h2>
+      <p class="text-center text-jdl-muted mt-3 mb-10 hidden">面向丰富场景的物流服务</p>
+
+      <div class="relative mb-12 px-2 md:px-12 select-none">
+        <!-- 左箭头 -->
+        <button id="svcPrev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-gray-200/80 hover:bg-gray-300 text-gray-500 flex items-center justify-center transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.2" d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <!-- 右箭头 -->
+        <button id="svcNext" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-gray-200/80 hover:bg-gray-300 text-gray-500 flex items-center justify-center transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.2" d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <!-- 可滚动 tab 容器（一页显示5个） -->
+        <div id="svcTabs" class="flex items-start gap-2 overflow-hidden px-2 scroll-smooth">
+        <button data-svc="express" class="svc-tab active relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <path d="M24 7 L41 15.5 L24 24 L7 15.5 Z" fill="#E1251B"/>
+            <path d="M7 15.5 L24 24 L24 41 L7 32.5 Z" fill="#ffffff" stroke="#e0e0e0"/>
+            <path d="M41 15.5 L24 24 L24 41 L41 32.5 Z" fill="#f2f2f2" stroke="#e0e0e0"/>
+            <rect x="11" y="24" width="4.5" height="3.5" rx="0.5" fill="#E1251B"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">快递快运服务</span>
+        </button>
+        <button data-svc="warehouse" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="5" fill="#E1251B"/>
+            <circle cx="10" cy="14" r="3.5" fill="#E1251B"/>
+            <circle cx="38" cy="14" r="3.5" fill="#E1251B"/>
+            <circle cx="10" cy="34" r="3.5" fill="#E1251B"/>
+            <circle cx="38" cy="34" r="3.5" fill="#E1251B"/>
+            <circle cx="24" cy="10" r="3" fill="#f2f2f2" stroke="#e0e0e0"/>
+            <circle cx="24" cy="38" r="3" fill="#f2f2f2" stroke="#e0e0e0"/>
+            <path d="M24 19 L12 16M24 19 L36 16M24 29 L12 32M24 29 L36 32M24 19 L24 13M24 29 L24 35" stroke="#ccc" stroke-width="1.2"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">仓配一体服务</span>
+        </button>
+        <button data-svc="bulky" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <path d="M14 14 L34 14 L38 20 L18 20 Z" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M14 14 L18 20 L18 36 L14 30 Z" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M34 14 L38 20 L38 36 L34 30 Z" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M18 20 L38 20 L38 36 L18 36 Z" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M24 24 L32 24 L32 32 L24 32 Z" fill="#E1251B"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">大件服务</span>
+        </button>
+        <button data-svc="inbound" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <path d="M8 20 L24 10 L40 20 Z" fill="#E1251B"/>
+            <rect x="11" y="20" width="26" height="18" fill="#ffffff" stroke="#e0e0e0"/>
+            <rect x="20" y="26" width="8" height="12" rx="1" fill="#E1251B"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">送仓服务</span>
+        </button>
+        <button data-svc="cold" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <path d="M24 8 L24 40M12 14 L36 34M36 14 L12 34" stroke="#E1251B" stroke-width="3" stroke-linecap="round"/>
+            <path d="M24 8 L20 14M24 8 L28 14M24 40 L20 34M24 40 L28 34" stroke="#E1251B" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="3" fill="#E1251B"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">冷链服务</span>
+        </button>
+        <button data-svc="medical" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <rect x="10" y="14" width="28" height="22" rx="3" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M18 14 L18 10 L30 10 L30 14" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M24 20 L24 30M19 25 L29 25" stroke="#E1251B" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">医药服务</span>
+        </button>
+        <button data-svc="jdService" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="14" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M24 18 L24 30M18 24 L30 24" stroke="#E1251B" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">京东服务</span>
+        </button>
+        <button data-svc="capacity" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="22" width="28" height="12" rx="1.5" fill="#E1251B"/>
+            <rect x="34" y="26" width="8" height="8" fill="#ffffff" stroke="#ccc" stroke-width="1.2"/>
+            <circle cx="14" cy="36" r="3" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <circle cx="32" cy="36" r="3" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">运力服务</span>
+        </button>
+        <button data-svc="intl" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="15" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M9 24 L39 24M24 9 C17 15 17 33 24 39M24 9 C31 15 31 33 24 39" stroke="#E1251B" stroke-width="1.8"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">国际物流</span>
+        </button>
+        <button data-svc="tech" class="svc-tab relative flex flex-col items-center gap-2 px-3 py-2 shrink-0 w-1/5">
+          <svg class="w-12 h-12 md:w-14 md:h-14 transition" viewBox="0 0 48 48" fill="none">
+            <rect x="10" y="14" width="28" height="18" rx="2" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
+            <rect x="14" y="18" width="8" height="6" fill="#E1251B"/>
+            <rect x="24" y="18" width="10" height="3" fill="#ddd"/>
+            <rect x="24" y="23" width="10" height="3" fill="#ddd"/>
+            <path d="M18 32 L18 38 M30 32 L30 38" stroke="#ccc" stroke-width="1.5"/>
+          </svg>
+          <span class="text-sm md:text-base font-medium">物流科技</span>
+        </button>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h3 id="svcTitle" class="text-2xl font-semibold mb-3">快递快运服务</h3>
+          <p id="svcDesc" class="text-jdl-muted leading-7 mb-8">向企业及个人客户提供安全可靠、时效领先、专业贴心的快递及快运服务，以及在此基础上的多种增值服务。</p>
+          <div class="bg-white rounded-2xl p-6 shadow-sm flex gap-8">
+            <div class="text-center w-24 shrink-0">
+              <div class="w-12 h-12 mx-auto rounded-full bg-red-50 text-jdl-red flex items-center justify-center mb-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2" stroke-width="1.8"/><path stroke-width="1.8" d="M5.5 19c1.2-3.2 3.5-4.8 6.5-4.8S17.8 15.8 19 19"/></svg>
+              </div>
+              <p class="text-sm font-medium">产品服务</p>
+            </div>
+            <div class="grid grid-cols-2 gap-x-10 gap-y-2 text-sm text-[#555]" id="svcLinks">
+              <p class="font-semibold col-span-1">快递</p>
+              <p class="font-semibold col-span-1">快运</p>
+              <a href="#" class="hover:text-jdl-red">京东特快</a>
+              <a href="#" class="hover:text-jdl-red">重货标快</a>
+              <a href="#" class="hover:text-jdl-red">京东标快</a>
+              <a href="#" class="hover:text-jdl-red">整车直达</a>
+              <a href="#" class="hover:text-jdl-red">增值服务</a>
+              <a href="#" class="hover:text-jdl-red">增值服务</a>
+            </div>
+          </div>
+          <a href="#about" class="inline-flex mt-8 bg-jdl-red hover:bg-jdl-hover text-white rounded-full px-8 py-3 text-sm">立即咨询 ›</a>
+        </div>
+        <div id="svcVisual" class="h-[280px] md:h-[340px] rounded-2xl bg-gradient-to-br from-jdl-red to-[#8a0f0f] shadow-panel flex items-end justify-center overflow-hidden relative">
+          <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,white,transparent_40%)]"></div>
+          <div class="mb-8 w-64 h-36 bg-jdl-red rounded-lg border-4 border-white/30 shadow-xl flex items-center justify-center text-white font-bold tracking-widest">JDL TRUCK</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 供应链服务 -->
+  <section id="supply" class="relative py-16 md:py-20 text-white overflow-hidden">
+    <div class="absolute inset-0 bg-[#3a3a3a]"></div>
+    <div class="absolute inset-0 opacity-40 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+    <div class="relative max-w-[1280px] mx-auto px-4 sm:px-6">
+      <h2 class="text-center text-2xl md:text-[32px] font-semibold title-rule">热门行业解决方案</h2>
+      <p class="text-center text-white/70 mt-3 mb-10">京东物流完善的服务体系为企业保驾护航</p>
+
+      <div class="grid lg:grid-cols-2 gap-10 items-start">
+        <div>
+          <h3 id="indTitle" class="text-3xl font-semibold mb-4">快消</h3>
+          <p id="indDesc" class="text-white/80 leading-7 mb-6">为消费品行业客户提供数字化、可视化、智能化的一体解决方案，向客户提供全渠道 E2E 服务，实现供应链升级。</p>
+          <ul id="indPoints" class="space-y-2 text-white/70 text-sm mb-8 list-disc list-inside">
+            <li>多渠道多场景的供应链服务能力</li>
+            <li>广泛的物流网络覆盖能力</li>
+          </ul>
+          <a href="#about" class="inline-flex bg-jdl-red hover:bg-jdl-hover text-white rounded-full px-7 py-2.5 text-sm">立即咨询 ›</a>
+        </div>
+        <div id="indVisual" class="h-56 lg:h-64 rounded-xl bg-gradient-to-br from-[#8a6a4a] to-[#3a2a1a] flex items-center justify-center text-white/30 text-sm overflow-hidden relative">
+          <div class="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_70%_30%,white,transparent_50%)]"></div>
+          <span class="relative">行业场景</span>
+        </div>
+      </div>
+
+      <div id="indTabs" class="mt-10 grid grid-cols-3 sm:grid-cols-6 gap-2">
+        <button data-ind="fmcg" class="ind-tab active h-20 rounded-lg bg-white/90 text-jdl-dark font-medium flex flex-col items-center justify-center gap-1 relative"><svg class="w-7 h-7" viewBox="0 0 48 48" fill="none"><path d="M14 10 L34 10 L38 18 L34 38 L14 38 L10 18 Z" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="18" r="2.5" fill="currentColor"/></svg>
+          <span class="ind-more">了解更多 ›</span>
+          <span>快消</span>
+        </button>
+        <button data-ind="fashion" class="ind-tab h-20 rounded-lg bg-white/90 text-jdl-dark font-medium flex flex-col items-center justify-center gap-1"><svg class="w-7 h-7" viewBox="0 0 48 48" fill="none"><path d="M16 10 L22 14 L26 14 L32 10 L40 18 L34 24 L32 40 L16 40 L14 24 L8 18 Z" stroke="currentColor" stroke-width="2"/></svg>
+          <span class="ind-more">了解更多 ›</span>
+          <span>服装</span>
+        </button>
+        <button data-ind="appliance" class="ind-tab h-20 rounded-lg bg-white/90 text-jdl-dark font-medium flex flex-col items-center justify-center gap-1"><svg class="w-7 h-7" viewBox="0 0 48 48" fill="none"><rect x="12" y="8" width="24" height="32" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="28" r="6" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="36" y2="16" stroke="currentColor" stroke-width="2"/></svg>
+          <span class="ind-more">了解更多 ›</span>
+          <span>家电</span>
+        </button>
+        <button data-ind="digital" class="ind-tab h-20 rounded-lg bg-white/90 text-jdl-dark font-medium flex flex-col items-center justify-center gap-1"><svg class="w-7 h-7" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="20" rx="1.5" stroke="currentColor" stroke-width="2"/><line x1="18" y1="36" x2="30" y2="36" stroke="currentColor" stroke-width="2"/><line x1="24" y1="32" x2="24" y2="36" stroke="currentColor" stroke-width="2"/></svg>
+          <span class="ind-more">了解更多 ›</span>
+          <span>3C</span>
+        </button>
+        <button data-ind="auto" class="ind-tab h-20 rounded-lg bg-white/90 text-jdl-dark font-medium flex flex-col items-center justify-center gap-1"><svg class="w-7 h-7" viewBox="0 0 48 48" fill="none"><path d="M8 28 L12 18 L36 18 L40 28 L40 34 L8 34 Z" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="34" r="3" stroke="currentColor" stroke-width="2"/><circle cx="33" cy="34" r="3" stroke="currentColor" stroke-width="2"/></svg>
+          <span class="ind-more">了解更多 ›</span>
+          <span>汽车</span>
+        </button>
+        <button data-ind="fresh" class="ind-tab h-20 rounded-lg bg-white/90 text-jdl-dark font-medium flex flex-col items-center justify-center gap-1"><svg class="w-7 h-7" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="28" r="12" stroke="currentColor" stroke-width="2"/><path d="M24 16 C24 12 26 10 30 10" stroke="currentColor" stroke-width="2"/><path d="M24 20 L24 36" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="ind-more">了解更多 ›</span>
+          <span>生鲜</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 物流网络 / 数据 -->
+  <section class="py-16 md:py-20 bg-white relative overflow-hidden">
+    <!-- 半球点阵地球（右侧，轮廓清晰） -->
+    <div class="absolute -right-[20%] top-1/2 -translate-y-1/2 w-[70%] h-[150%] pointer-events-none"
+         style="background-image: radial-gradient(circle, #555 1.3px, transparent 1.3px); background-size: 12px 12px; -webkit-mask-image: radial-gradient(circle at 50% 50%, black 0%, black 35%, transparent 48%); mask-image: radial-gradient(circle at 50% 50%, black 0%, black 35%, transparent 48%); opacity:.45;"></div>
+    <!-- 右半球红色点阵层 -->
+    <div class="absolute -right-[20%] top-1/2 -translate-y-1/2 w-[70%] h-[150%] pointer-events-none"
+         style="background-image: radial-gradient(circle, #E1251B 1.3px, transparent 1.3px); background-size: 12px 12px; -webkit-mask-image: radial-gradient(circle at 70% 50%, black 0%, black 20%, transparent 40%); mask-image: radial-gradient(circle at 70% 50%, black 0%, black 20%, transparent 40%); opacity:.5;"></div>
+    <!-- 最右侧红色横条纹装饰 -->
+    <div class="absolute right-0 top-0 h-full w-[10%] pointer-events-none opacity-20"
+         style="background-image: repeating-linear-gradient(0deg, #E1251B 0, #E1251B 2px, transparent 2px, transparent 10px); -webkit-mask-image: linear-gradient(to left, black, transparent 90%); mask-image: linear-gradient(to left, black, transparent 90%);"></div>
+
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative">
+      <h2 class="text-center text-2xl md:text-[32px] font-semibold title-rule">物流网络</h2>
+      <p class="text-center text-jdl-muted mt-3 mb-12">遍布全球的基础设施为物流提供快速稳定、智能可靠的服务</p>
+
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-8 items-center">
+        <!-- 左：数据列表 -->
+        <ul class="space-y-7">
+          <li>
+            <p class="text-jdl-red text-4xl md:text-5xl font-semibold leading-none">6<span class="text-base md:text-lg text-jdl-dark ml-2 font-normal">大网络</span></p>
+            <p class="text-sm text-jdl-muted mt-2 leading-6 max-w-md">仓储网络、综合运输网络、最后一公里配送网络、大件网络、冷链物流网络和跨境物流网络</p>
+          </li>
+          <li>
+            <p class="text-jdl-red text-4xl md:text-5xl font-semibold leading-none">3,600<span class="text-base md:text-lg text-jdl-dark ml-2 font-normal">个</span></p>
+            <p class="text-sm text-jdl-muted mt-2">京东物流已拥有超 3600 个仓库</p>
+          </li>
+          <li>
+            <p class="text-jdl-red text-4xl md:text-5xl font-semibold leading-none">3,400<span class="text-base md:text-lg text-jdl-dark ml-2 font-normal">万平方米</span></p>
+            <p class="text-sm text-jdl-muted mt-2">仓库总管理面积超 3400 万平方米</p>
+          </li>
+          <li>
+            <p class="text-jdl-red text-4xl md:text-5xl font-semibold leading-none">25<span class="text-base md:text-lg text-jdl-dark ml-2 font-normal">个</span></p>
+            <p class="text-sm text-jdl-muted mt-2">京东物流海外仓已覆盖全球 25 个国家和地区</p>
+          </li>
+        </ul>
+
+        <!-- 右：半球地图上叠 4 个红圆 -->
+        <div class="relative h-72 md:h-80">
+          <div class="absolute inset-x-0 bottom-0 flex justify-center items-end gap-3 md:gap-5 z-10">
+            <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-jdl-red text-white flex flex-col items-center justify-center text-[11px] md:text-xs leading-tight shadow-lg">
+              <svg class="w-6 h-6 md:w-7 md:h-7 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.6"/><path stroke-width="1.6" d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+              全网覆盖
+            </div>
+            <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-jdl-red text-white flex flex-col items-center justify-center text-[11px] md:text-xs leading-tight shadow-lg">
+              <svg class="w-6 h-6 md:w-7 md:h-7 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="1.6"/><path stroke-width="1.6" d="M8 9h8M8 13h8M8 17h5"/></svg>
+              数实融合
+            </div>
+            <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-jdl-red text-white flex flex-col items-center justify-center text-[11px] md:text-xs leading-tight shadow-lg">
+              <svg class="w-6 h-6 md:w-7 md:h-7 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2" stroke-width="1.6"/><circle cx="5" cy="19" r="2.2" stroke-width="1.6"/><circle cx="19" cy="19" r="2.2" stroke-width="1.6"/><path stroke-width="1.6" d="M12 7.2v3.8M10.2 11L6.8 16.8M13.8 11l3.4 5.8"/></svg>
+              全链共生
+            </div>
+            <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-jdl-red text-white flex flex-col items-center justify-center text-[11px] md:text-xs leading-tight shadow-lg">
+              <svg class="w-6 h-6 md:w-7 md:h-7 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.6"/><path stroke-width="1.6" d="M12 7v5l3 3"/></svg>
+              7×24 小时服务
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 新闻资讯 -->
+  <section id="news" class="py-16 md:py-20 bg-gradient-to-b from-[#d9cfcb] to-[#c9b8b4]">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
+      <h2 class="text-center text-2xl md:text-[32px] font-semibold title-rule text-white">新闻动态</h2>
+      <div class="mt-12 grid lg:grid-cols-[1fr_160px] gap-6 items-start">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <article class="news-card">
+            <div class="overflow-hidden rounded-2xl h-56 bg-[#222] relative">
+              <div class="news-cover absolute inset-0 bg-gradient-to-br from-jdl-red to-[#3a0a0a] transition duration-500"></div>
+              <span class="absolute top-3 left-3 bg-white/90 text-jdl-red text-xs px-2 py-0.5 rounded">新闻</span>
+              <span class="news-more absolute bottom-10 left-1/2 -translate-x-1/2 bg-jdl-red text-white text-sm rounded-full px-5 py-2 whitespace-nowrap shadow-lg">查看详情 ›</span>
+              <p class="absolute bottom-3 left-3 text-white text-xs">2026.05.12</p>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-[#333]">一图看懂！京东物流 Q1 收入同比增长 29%，创上市以来一季度最佳利润表现</p>
+          </article>
+          <article class="news-card">
+            <div class="overflow-hidden rounded-2xl h-56 bg-[#222] relative">
+              <div class="news-cover absolute inset-0 bg-gradient-to-br from-[#4b5563] to-[#111] transition duration-500"></div>
+              <span class="absolute top-3 left-3 bg-white/90 text-jdl-red text-xs px-2 py-0.5 rounded">新闻</span>
+              <span class="news-more absolute bottom-10 left-1/2 -translate-x-1/2 bg-jdl-red text-white text-sm rounded-full px-5 py-2 whitespace-nowrap shadow-lg">查看详情 ›</span>
+              <p class="absolute bottom-3 left-3 text-white text-xs">2026.04.25</p>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-[#333]">一图读懂京东物流 2025 年 ESG 报告</p>
+          </article>
+          <article class="news-card">
+            <div class="overflow-hidden rounded-2xl h-56 bg-[#222] relative">
+              <div class="news-cover absolute inset-0 bg-gradient-to-br from-[#1d4ed8] to-[#0f172a] transition duration-500"></div>
+              <span class="absolute top-3 left-3 bg-white/90 text-jdl-red text-xs px-2 py-0.5 rounded">新闻</span>
+              <span class="news-more absolute bottom-10 left-1/2 -translate-x-1/2 bg-jdl-red text-white text-sm rounded-full px-5 py-2 whitespace-nowrap shadow-lg">查看详情 ›</span>
+              <p class="absolute bottom-3 left-3 text-white text-xs">2026.04.23</p>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-[#333]">全球最高标准：京东物流斩获国际软件研发诺贝尔奖</p>
+          </article>
+          <article class="news-card">
+            <div class="overflow-hidden rounded-2xl h-56 bg-[#222] relative">
+              <div class="news-cover absolute inset-0 bg-gradient-to-br from-emerald-700 to-[#052e16] transition duration-500"></div>
+              <span class="absolute top-3 left-3 bg-white/90 text-jdl-red text-xs px-2 py-0.5 rounded">新闻</span>
+              <span class="news-more absolute bottom-10 left-1/2 -translate-x-1/2 bg-jdl-red text-white text-sm rounded-full px-5 py-2 whitespace-nowrap shadow-lg">查看详情 ›</span>
+              <p class="absolute bottom-3 left-3 text-white text-xs">2025.08.14</p>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-[#333]">服务获权威认可！京东物流旗下 JD Express Investment 获香港海关 AEO 认证</p>
+          </article>
+        </div>
+        <aside class="hidden lg:flex flex-col gap-6 bg-gray-400/40 rounded-2xl p-8 justify-center">
+          <a href="#news" class="bg-white/20 hover:bg-white/30 rounded-full text-center py-4 text-base text-white hover:text-jdl-red transition">更多新闻 ›</a>
+          <a href="#news" class="bg-white/20 hover:bg-white/30 rounded-full text-center py-4 text-base text-white hover:text-jdl-red transition">更多活动 ›</a>
+        </aside>
+      </div>
+      <div class="lg:hidden flex gap-3 mt-8 justify-center">
+        <a href="#news" class="bg-white/85 rounded-full px-5 py-2 text-sm">更多新闻 ›</a>
+        <a href="#news" class="bg-white/85 rounded-full px-5 py-2 text-sm">更多活动 ›</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / 关于我们 -->
+  <footer id="about" class="bg-[#1a1a1a] text-white/70">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 py-12">
+      <!-- 联系我们 + 电话 + 社交图标 -->
+      <div class="flex flex-wrap items-center gap-6 pb-8">
+        <div>
+          <p class="text-sm text-white/60 mb-2">联系我们</p>
+          <p class="text-3xl md:text-4xl font-light tracking-wider text-white flex items-center gap-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.8" d="M3 5a2 2 0 012-2h2.5a1 1 0 01.95.68l1.2 3.6a1 1 0 01-.27 1.05L7.6 9.9a13 13 0 006.5 6.5l1.57-1.78a1 1 0 011.05-.27l3.6 1.2a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z"/></svg>
+            950616
+          </p>
+        </div>
+        <div class="flex items-center gap-3 ml-4">
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-jdl-red transition">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.5 13.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM12 2C6.48 2 2 6.04 2 11c0 2.52 1.17 4.79 3.02 6.41L4 21l3.7-1.93c1.35.52 2.84.81 4.3.81 5.52 0 10-4.04 10-9s-4.48-9-10-9z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-jdl-red transition">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M10 14c-3.31 0-6-1.79-6-4s2.69-4 6-4 6 1.79 6 4-2.69 4-6 4zm7.5-8c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm2.5 8c0 2.21-3.58 4-8 4s-8-1.79-8-4c0-.69.36-1.33.98-1.88C3.94 12.6 3 11.36 3 10c0-2.76 4.03-5 9-5s9 2.24 9 5c0 1.04-.7 2.02-1.9 2.78.25.35.4.75.4 1.22z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-jdl-red transition">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.32 5.57a1 1 0 01.11 1.41A8.5 8.5 0 0112 20.5c-2.1 0-4.1-.75-5.68-2.1a1 1 0 011.26-1.54A6.5 6.5 0 0012 18.5a6.5 6.5 0 004.98-11.2 1 1 0 011.44-1.73zM12 6a5.5 5.5 0 015.5 5.5c0 .44-.05.87-.14 1.28a1 1 0 01-1.96-.44c.06-.28.1-.57.1-.84A3.5 3.5 0 0012 8a1 1 0 110-2zm0 2a3.5 3.5 0 013.5 3.5c0 .44-.05.87-.14 1.28a1 1 0 01-1.96-.44c.06-.28.1-.57.1-.84A3.5 3.5 0 0012 8a1 1 0 110-2z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6 列导航 -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 py-10 text-sm border-t border-white/10">
+        <div>
+          <p class="text-white mb-4">更多推荐</p>
+          <ul class="space-y-2.5">
+            <li>京东服务</li><li>最新资讯</li><li>航空业务合作</li><li>商家优惠通道</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-white mb-4">便捷入口</p>
+          <ul class="space-y-2.5">
+            <li>商家工作台</li><li>电子合同签约</li><li>意见反馈</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-white mb-4">服务支持</p>
+          <ul class="space-y-2.5">
+            <li>寄快递</li><li>查快递</li><li>服务范围查询</li><li>服务细则</li><li>物流合作</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-white mb-4">可持续发展</p>
+          <ul class="space-y-2.5"><li>ESG</li><li>碳足迹计算</li></ul>
+        </div>
+        <div>
+          <p class="text-white mb-4">关于我们</p>
+          <ul class="space-y-2.5">
+            <li>公司介绍</li><li>新闻公告</li><li>投资者关系</li><li>联系我们</li><li>政企合作</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-white mb-4">友情链接</p>
+          <ul class="space-y-2.5"><li>德邦快递</li><li>京东企业购</li></ul>
+        </div>
+      </div>
+
+      <!-- 认证图标（居中） -->
+      <div class="flex items-center justify-center gap-4 py-5">
+        <!-- 网站安全 -->
+        <div class="flex items-center gap-1.5 bg-white/5 rounded-md px-2.5 py-1.5">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2 L4 5 V11 C4 16.5 7.5 20.5 12 22 C16.5 20.5 20 16.5 20 11 V5 Z" fill="#f59e0b"/>
+            <path d="M9 12 L11 14 L15 10" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text-[10px] text-white/70">网站安全</span>
+        </div>
+        <!-- 可信网站 -->
+        <div class="flex items-center gap-1.5 bg-white/5 rounded-md px-2.5 py-1.5">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="#e11d48"/>
+            <circle cx="12" cy="12" r="6.5" fill="#fff"/>
+            <path d="M8 12 L11 15 L16 9" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text-[10px] text-white/70">可信网站</span>
+        </div>
+        <!-- 网安备案 -->
+        <div class="flex items-center">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M4 10 L12 5 L20 10 V18 H4 Z" fill="#2563eb"/>
+            <rect x="8" y="12" width="8" height="4" fill="#fff"/>
+            <circle cx="12" cy="14" r="1.2" fill="#2563eb"/>
+          </svg>
+        </div>
+        <!-- 盾标 -->
+        <div class="flex items-center">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2 L5 5 V11 C5 15.5 8 19 12 20.5 C16 19 19 15.5 19 11 V5 Z" fill="#0ea5e9"/>
+            <path d="M12 6 L8 8.5 V11 C8 13.5 10 15.5 12 16.5 C14 15.5 16 13.5 16 11 V8.5 Z" fill="#fff" opacity=".9"/>
+          </svg>
+        </div>
+        <!-- 国徽 -->
+        <div class="flex items-center">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="#dc2626"/>
+            <path d="M12 6 L13.5 10.5 L18 10.5 L14.5 13.5 L15.5 18 L12 15.5 L8.5 18 L9.5 13.5 L6 10.5 L10.5 10.5 Z" fill="#fbbf24"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 版权信息 -->
+      <p class="text-xs text-white/40 leading-relaxed pt-2">
+        2004-2026 © 京东物流版权所有　投资者关系 Investor Relations　服务细则　个人信息保护规则　营业执照　京公网安备11011502005548号　增值电信业务经营许可证：京ICP备20010510号-7
+      </p>
+    </div>
+  </footer>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-jdl-dark text-white text-sm px-4 py-2 rounded-full opacity-0 pointer-events-none transition">请输入运单号后查询</div>
+
+  <script>
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+    $("#menuBtn").addEventListener("click", () => {
+      $("#mobileMenu").classList.toggle("hidden");
+    });
+    $$("#mobileMenu a").forEach((a) =>
+      a.addEventListener("click", () => $("#mobileMenu").classList.add("hidden"))
+    );
+
+    const slides = $$(".slide");
+    const dotsWrap = $("#dots");
+    let idx = 0;
+    let timer;
+    slides.forEach((_, i) => {
+      const d = document.createElement("button");
+      d.className = "dot h-2 w-2 rounded-full bg-white/70 transition-all";
+      d.addEventListener("click", () => go(i));
+      dotsWrap.appendChild(d);
+    });
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+      $$(".dot").forEach((d, i) => d.classList.toggle("active", i === idx));
+      restart();
+    }
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(() => go(idx + 1), 5000);
+    }
+    $("#prevSlide").addEventListener("click", () => go(idx - 1));
+    $("#nextSlide").addEventListener("click", () => go(idx + 1));
+    go(0);
+
+    const svcData = {
+      express: {
+        title: "快递快运服务",
+        desc: "向企业及个人客户提供安全可靠、时效领先、专业贴心的快递及快运服务，以及在此基础上的多种增值服务。",
+        visual: "from-jdl-red to-[#8a0f0f]",
+        visualLabel: "JDL EXPRESS",
+        html: `<p class="font-semibold">快递</p><p class="font-semibold">快运</p><a href="#" class="hover:text-jdl-red">京东特快</a><a href="#" class="hover:text-jdl-red">重货标快</a><a href="#" class="hover:text-jdl-red">京东标快</a><a href="#" class="hover:text-jdl-red">整车直达</a><a href="#" class="hover:text-jdl-red">增值服务</a><a href="#" class="hover:text-jdl-red">增值服务</a><a href="#" class="hover:text-jdl-red col-span-2">查看更多 ›</a>`,
+      },
+      warehouse: {
+        title: "仓配一体服务",
+        desc: "以京仓/云仓+京配/云配服务不同需求的客户，为电商仓平台商家提供高品质以及性价比仓配一体物流服务。",
+        visual: "from-[#c98a3a] to-[#6b4a1a]",
+        visualLabel: "SMART WAREHOUSE",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">商务仓</a><a href="#" class="hover:text-jdl-red col-span-2">电商仓</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      bulky: {
+        title: "大件服务",
+        desc: "面向家电、家居、电动车、健身器材行业，为客户提供全渠道正、逆向全链路一体化的仓&配供应链服务。",
+        visual: "from-[#b84a3a] to-[#5a1a10]",
+        visualLabel: "BULKY DELIVERY",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">大件商务仓</a><a href="#" class="hover:text-jdl-red col-span-2">大件备件仓</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      inbound: {
+        title: "送仓服务",
+        desc: "为企业客户提供从货源地到收货仓之间的收货、暂存、分仓调度、运输、送仓、退仓的一体化供应链物流服务。",
+        visual: "from-[#3a5a7a] to-[#1a2a3a]",
+        visualLabel: "INBOUND DELIVERY",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">特快到仓</a><a href="#" class="hover:text-jdl-red col-span-2">极速到仓</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      cold: {
+        title: "冷链服务",
+        desc: "专注于生鲜食品，通过构建社会化冷链协同网络，打造全流程、全场景的 F2B2C 一体化供应链服务平台，实现对商家与消费终端的安心交付。",
+        visual: "from-[#2a6a8a] to-[#0a2a3a]",
+        visualLabel: "COLD CHAIN",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">生鲜商务仓</a><a href="#" class="hover:text-jdl-red col-span-2">冷链卡班</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      medical: {
+        title: "医药服务",
+        desc: "面向受国家药监监管的医药行业，以覆盖全国的仓&配资源，全程追溯控温的数字化能力，为客户提供合规专业、安全高效的多温层履约服务。",
+        visual: "from-[#3a7a6a] to-[#10302a]",
+        visualLabel: "MEDICAL",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">医药商务仓</a><a href="#" class="hover:text-jdl-red col-span-2">医冷快递</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      jdService: {
+        title: "京东服务",
+        desc: "京东物流旗下行业领先的一站式服务平台。",
+        visual: "from-[#8a3a5a] to-[#2a1020]",
+        visualLabel: "JD SERVICE",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">安装</a><a href="#" class="hover:text-jdl-red col-span-2">维修</a><a href="#" class="hover:text-jdl-red col-span-2">机器人服务</a>`,
+      },
+      capacity: {
+        title: "运力服务",
+        desc: "整合公路、铁路、航空、基础设施设备等资源，提供全方位、多层次的物流运输服务。",
+        visual: "from-[#b85a2a] to-[#3a1a0a]",
+        visualLabel: "CAPACITY",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">专线包仓</a><a href="#" class="hover:text-jdl-red col-span-2">全货机包机</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      intl: {
+        title: "国际物流",
+        desc: "助力中国制造和中国品牌一站出海，并为全球客户提供优质、高效全面的一体化供应链解决方案。",
+        visual: "from-[#3a5a8a] to-[#0a1a30]",
+        visualLabel: "INTERNATIONAL",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">跨境端到端</a><a href="#" class="hover:text-jdl-red col-span-2">国际运输</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+      tech: {
+        title: "物流科技",
+        desc: "致力于创新技术服务与多元场景的有机结合，通过自动化、数字化、智能化的物流科技产品和解决方案，推动高效协同的生态赋能和多元价值的共赢共创。",
+        visual: "from-[#4a4a5a] to-[#14141c]",
+        visualLabel: "LOGISTICS TECH",
+        html: `<p class="font-semibold col-span-2">产品服务</p><a href="#" class="hover:text-jdl-red col-span-2">智能仓储</a><a href="#" class="hover:text-jdl-red col-span-2">智能物流园区</a><a href="#" class="hover:text-jdl-red col-span-2">更多 ›</a>`,
+      },
+    };
+    const svcKeys = ["express","warehouse","bulky","inbound","cold","medical","jdService","capacity","intl","tech"];
+    let svcIdx = 0;
+    function activateSvc(key) {
+      svcIdx = svcKeys.indexOf(key);
+      $$(".svc-tab").forEach((b) => b.classList.toggle("active", b.dataset.svc === key));
+      const d = svcData[key];
+      $("#svcTitle").textContent = d.title;
+      $("#svcDesc").textContent = d.desc;
+      $("#svcLinks").innerHTML = d.html;
+      const v = $("#svcVisual");
+      v.className = "h-[280px] md:h-[340px] rounded-2xl shadow-panel flex items-end justify-center overflow-hidden relative bg-gradient-to-br " + d.visual;
+      v.innerHTML = '<div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,white,transparent_40%)]"></div><div class="mb-8 w-64 h-36 rounded-lg border-4 border-white/30 shadow-xl flex items-center justify-center text-white font-bold tracking-widest">' + d.visualLabel + '</div>';
+    }
+    // 左右箭头翻页
+    const svcBox = document.getElementById("svcTabs");
+    document.getElementById("svcPrev").addEventListener("click", () => {
+      svcBox.scrollBy({ left: -svcBox.clientWidth, behavior: "smooth" });
+    });
+    document.getElementById("svcNext").addEventListener("click", () => {
+      svcBox.scrollBy({ left: svcBox.clientWidth, behavior: "smooth" });
+    });
+        // 集团网站点击切换
+    const gsMenu = document.getElementById("groupSiteMenu");
+    document.getElementById("groupSiteTrigger").addEventListener("click", (e) => {
+      e.stopPropagation();
+      gsMenu.classList.toggle("open");
+    });
+    document.addEventListener("click", (e) => {
+      if (!document.getElementById("groupSite").contains(e.target)) {
+        gsMenu.classList.remove("open");
+      }
+    });
+    $$(".svc-tab").forEach((btn) => {
+      btn.addEventListener("mouseenter", () => activateSvc(btn.dataset.svc));
+      btn.addEventListener("click", () => activateSvc(btn.dataset.svc));
+    });
+    let touchX = 0, touchY = 0;
+    const svcSection = document.getElementById("logistics");
+    svcSection.addEventListener("touchstart", (e) => {
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
+    svcSection.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        if (dx < 0 && svcIdx < svcKeys.length - 1) activateSvc(svcKeys[svcIdx + 1]);
+        else if (dx > 0 && svcIdx > 0) activateSvc(svcKeys[svcIdx - 1]);
+      }
+    }, { passive: true });
+
+    const indData = {
+      fmcg: {
+        title: "快消",
+        desc: "为消费品行业客户提供数字化、可视化、智能化的一体解决方案，向客户提供全渠道 E2E 服务，实现供应链升级。",
+        points: ["多渠道多场景的供应链服务能力", "广泛的物流网络覆盖能力"],
+        visual: "from-[#8a6a4a] to-[#3a2a1a]",
+      },
+      fashion: {
+        title: "服装",
+        desc: "京东物流秉承客户为先，利用物流覆盖全国的仓运配网络，为客户提供优质的基础物流服务。",
+        points: ["电商平台物流评分提升", "正逆一体"],
+        visual: "from-[#6b4a3a] to-[#2a1a14]",
+      },
+      appliance: {
+        title: "家电",
+        desc: "通过供应链自动化、数智化，提升生产效率，优化供应链布局，最终实现产销协同的一体化供应链物流目标。",
+        points: ["多样化配送体系及多场景融合", "提供行业化标准解决方案"],
+        visual: "from-[#5a6a7a] to-[#1a2430]",
+      },
+      digital: {
+        title: "3C",
+        desc: "京东物流结合自身多种产品能力，为企业提供多渠道一盘货的一站式物流解决方案。",
+        points: ["正逆一体服务无忧", "全渠道一盘货库存共享"],
+        visual: "from-[#4a5a6a] to-[#141c24]",
+      },
+      auto: {
+        title: "汽车",
+        desc: "助力汽车行业客户供应链自动化、数字化转型，共同打造柔性、高效敏捷的精益物流。",
+        points: ["降低取货物流成本", "自动化提升效率"],
+        visual: "from-[#7a3a3a] to-[#2a1010]",
+      },
+      fresh: {
+        title: "生鲜",
+        desc: "助力生鲜行业客户供应链自动化、数字化转型，共同打造柔性、高效敏捷的精益物流。",
+        points: ["冷链全覆盖", "协同数智化能力"],
+        visual: "from-[#3a6a4a] to-[#102a1a]",
+      },
+    };
+    $$(".ind-tab").forEach((btn) => {
+      btn.addEventListener("mouseenter", () => {
+        $$(".ind-tab").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const d = indData[btn.dataset.ind];
+        $("#indTitle").textContent = d.title;
+        $("#indDesc").textContent = d.desc;
+        $("#indPoints").innerHTML = d.points.map(p => "<li>" + p + "</li>").join("");
+        $("#indVisual").className = "h-56 lg:h-64 rounded-xl bg-gradient-to-br " + d.visual + " flex items-center justify-center text-white/30 text-sm overflow-hidden relative";
+      });
+    });
+
+    // 服务与产品 Mega Menu：企业服务 / 个人服务 切换
+    $$(".svc-side-tab").forEach((btn) => {
+      btn.addEventListener("mouseenter", () => {
+        $$(".svc-side-tab").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const name = btn.dataset.svcSide;
+        $$(".svc-pane").forEach((p) => p.classList.toggle("hidden", p.dataset.pane !== name));
+      });
+    });
+
+    $("#trackForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const toast = $("#toast");
+      const v = $("#waybill").value.trim();
+      toast.textContent = v ? `已提交查询：${v}（演示页不连接真实运单）` : "请输入运单号或包裹号";
+      toast.classList.remove("opacity-0");
+      setTimeout(() => toast.classList.add("opacity-0"), 2200);
+    });
+  </script>
+<!-- 右侧悬浮工具栏 -->
+<div class="fixed right-4 bottom-24 z-[70] flex flex-col items-center gap-3">
+  <!-- 头像 -->
+  <div class="w-11 h-11 rounded-full bg-gradient-to-br from-sky-200 to-sky-400 border-2 border-white shadow flex items-center justify-center text-xl">
+    👩
+  </div>
+  <!-- 竖条按钮组 -->
+  <div class="bg-white rounded-full shadow-lg flex flex-col items-center py-2 px-1.5 gap-1">
+    <!-- 在线客服（红点） -->
+    <div class="relative group">
+      <button class="w-11 h-11 rounded-full bg-jdl-red text-white flex items-center justify-center shadow">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.8" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-width="1.8" d="M8 10h8M8 14h5"/><path stroke-width="1.8" d="M17 17l3 3"/><path stroke-width="1.8" d="M17 7l.8 1.8 1.8.8-1.8.8L17 12l-.8-1.8-1.8-.8 1.8-.8z" fill="currentColor"/></svg>
+      </button>
+      <!-- 在线客服弹层 -->
+      <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl p-4 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+        <p class="text-center font-semibold mb-3">在线客服</p>
+        <div class="grid grid-cols-2 gap-3">
+          <a href="#" class="flex flex-col items-center gap-1 text-xs text-gray-600 hover:text-jdl-red">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" stroke-width="1.5"/><path stroke-width="1.5" d="M5 20c1.5-4 4.5-6 7-6s5.5 2 7 6"/></svg>
+            个人
+          </a>
+          <a href="#" class="flex flex-col items-center gap-1 text-xs text-gray-600 hover:text-jdl-red">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M4 21V9l8-6 8 6v12"/><path stroke-width="1.5" d="M9 21v-6h6v6"/></svg>
+            商家
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- 耳机 -->
+    <div class="relative group">
+      <button class="w-11 h-11 rounded-full bg-white text-gray-700 flex items-center justify-center hover:text-jdl-red">
+        <svg class="w-5 h-5" fill="none" stroke="#E1251B" viewBox="0 0 24 24"><path stroke-width="1.8" d="M4 14v-2a8 8 0 1116 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5" stroke-width="1.8"/><rect x="17" y="14" width="4" height="6" rx="1.5" stroke-width="1.8"/></svg>
+      </button>
+      <!-- 二维码弹层 -->
+      <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl p-4 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+        <p class="text-center font-semibold mb-3">企业客户专属顾问</p>
+        <div class="w-40 h-40 mx-auto bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">
+          [QR Code]
+        </div>
+      </div>
+    </div>
+    <!-- 握手 -->
+    <button class="w-11 h-11 rounded-full bg-white text-gray-700 flex items-center justify-center hover:text-jdl-red">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.8" d="M2 12l4-4 4 2 4-2 6 4"/><path stroke-width="1.8" d="M2 17l4-3 4 3 4-3 4 3"/><path stroke-width="1.8" d="M10 9l4 3M14 12l4-2"/></svg>
+    </button>
+  </div>
+  <!-- 回到顶部 -->
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center text-gray-600 hover:text-jdl-red">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.2" d="M6 15l6-6 6 6"/></svg>
+  </button>
+</div>
+</body>
+</html>
